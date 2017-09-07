@@ -38,4 +38,13 @@ let command3 = {method: "withdraw", accountID: 222, amount: 40};
 ```
 In event.js, the  ```handler(command)``` is used to pass the command to the handler.
 
-###  END
+###  Comparision with CRUD
+
+The ReadModel will handle read-operation instead of the querying the event storage directly.
+
+The create-operation update-operation and delete-operation will be treated as events. and the event will be persisted in the eventstore.
+the readModel can be rebuilt by replaying those event.
+
+
+
+
