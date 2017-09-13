@@ -69,18 +69,15 @@ const bank = new Bank();
 setTimeout(() => {
 
     let command = {method: "createUser", name: "Zeyu", age: 23, accountID: 1234123123123};
-    let command2 = {method: "deposit", accountID: 222, amount: 100};
-    let command3 = {method: "withdraw", accountID: 222, amount: 40};
+    let command2 = {method: "deposit", accountID: 1234123123123, amount: 100};
+    let command3 = {method: "withdraw", accountID: 1234123123123, amount: 40};
 
     console.log('Someone says Hi');
-    for (let i = 0; i < 10; i++) {
-        handler(command2);
-        handler(command3);
-    }
+    handler(command2);
 
     // initialize the readModel.
     console.log(bank.getAccounts());
-    console.log(bank.getBalances())
+    console.log(bank.getBalances());
 }, 1000);
 
 /**
@@ -117,7 +114,6 @@ createUser = function (cmd) {
         context: 'createUser'                 // optional
     }, function (err, stream) {
         stream.addEvent(cmd);
-
         stream.commit(function (err, stream) {
             // console.log(stream.eventsToDispatch); // this is an array containing all added events in this commit.
             // tell the readmodel the event has been saved.

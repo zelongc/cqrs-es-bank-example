@@ -14,7 +14,6 @@ class Bank {
         this.modelName = 'Bank';
         // balances = { 001:100
         //              002:200}
-
         this.balances = {};
         // accounts = { nick : 001}
         this.accounts = {};
@@ -49,6 +48,7 @@ class Bank {
     setAccount(name, accountID) {
         // console.log('I am setting accountID', name, accountID);
         this.accounts[name] = accountID;
+        this.balances[accountID] = 0
     }
 
     /**
@@ -57,11 +57,7 @@ class Bank {
      * @param {Number} amount. the money going to be added.
      */
     addBalance(accountID, amount) {
-        if (!this.balances[accountID]) {
-            this.balances[accountID] = amount
-        } else {
-            this.balances[accountID] = this.balances[accountID] + amount;
-        }
+        this.balances[accountID] = this.balances[accountID] + amount
     }
 
     /**
@@ -70,7 +66,12 @@ class Bank {
      * @param {Number} amount. the money going to be withdraw.
      */
     deductBalance(accountID, amount) {
-        this.balances[accountID] = this.balances[accountID] - amount;
+        if (amount >= this.balances[accountID]) {
+            this.balances[accountID] = this.balances[accountID] - amount
+        }
+        else {
+            throw new Error("No enough balance")
+        }
     }
 
     /**
@@ -80,8 +81,13 @@ class Bank {
     depositMoney(cmd) {
         let accountID = cmd.accountID
             , amount = cmd.amount;
-        this.accounts[accountID] = this.accounts[accountID] + amount
+        if (this.balances[accountID] !== undefined) {
+            this.addBalance(accountID, amount)
+        } else {
+            throw new Error("Account does not exist!")
+        }
     }
+
     /**
      * Withdraw
      * @param {command} cmd command.
@@ -89,8 +95,14 @@ class Bank {
     withdrawMoney(cmd) {
         let accountID = cmd.accountID
             , amount = cmd.amount;
-        this.accounts[accountID] = this.accounts[accountID] - amount
+
+        if (this.balances[accountID] !== undefined) {
+            this.deductBalance(accountID, amount)
+        } else {
+            throw new Error("Account does not exist!")
+        }
     }
+
     /**
      * Create Account.
      * @param {command} cmd command.
@@ -98,6 +110,7 @@ class Bank {
     createAccount(cmd) {
         let name = cmd.name;
         this.setAccount(name, cmd.accountID);
+
     }
 
     /**
@@ -143,19 +156,19 @@ class Bank {
 
             while (evts) {
                 for (let i = 0; i < evts.length; i++) {
-                    let accountID = evts[i].payload.accountID,
-                        amount = evts[i].payload.amount,
-                        method = evts[i].payload.method;
+                    let method = evts[i].payload.method,
+                        evt = evts[i].payload;
 
                     switch (method) {
-                        case 'deposit':
-                            self.addBalance(accountID, amount);
+                        case "createUser":
+                            self.createAccount(evt);
+                        case "deposit":
+                            self.depositMoney(evt);
                             break;
-                        case 'withdraw':
-                            self.deductBalance(accountID, amount);
+                        case "withdraw":
+                            self.withdrawMoney(evt);
                             break;
                     }
-
                 }
                 // retrieve next page of events.
                 evts = evts.next;
