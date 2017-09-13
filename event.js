@@ -76,8 +76,6 @@ setTimeout(() => {
     handler(command3);
     let command3 = {method: "withdraw", accountID: 1234123123123, amount: 40};
 
-    console.log('Someone says Hi');
-    handler(command2);
 
     // initialize the readModel.
     console.log(bank.getAccounts());

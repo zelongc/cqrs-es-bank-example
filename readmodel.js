@@ -160,9 +160,6 @@ class Bank {
                         evt = evts[i].payload;
                         console.log(method)
                     switch (method) {
-
-
-                    switch (method) {
                         case "createUser":
                             self.createAccount(evt);
                         case "deposit":
