@@ -1,6 +1,8 @@
 # A sample of CQRS + Event Sourcing
 
 This is a naive sample of the CQRS/ Event Sourcing implemention in Node.js
+
+Author Zelong Cong , University of Melbourne
 ## Dependencies
 
 mongodb
@@ -22,7 +24,7 @@ node event
 
 #### How it works.
 
-1.  The eventstore got connected at first then the ReadModel is initialized.
+1.  The EventStore gets connected at first then the ReadModel is initialized.
 
 2.  Any incoming commands(event) will firstly be handled by the command handler and passed to corresponding function. 
 after the command is stored in the database as event. the handler will emit this event to the listener. then the ReadModel
@@ -37,6 +39,10 @@ let command3 = {method: "withdraw", accountID: 222, amount: 40};
 
 ```
 In event.js, the  ```handler(command)``` is used to pass the command to the handler.
+
+###  Todos
+
+add change name command
 
 ###  Comparision with CRUD
 
