@@ -70,17 +70,14 @@ setTimeout(() => {
 
     let command = {method: "createUser", name: "Zeyu", age: 23, accountID: 1234123123123};
     let command2 = {method: "deposit", accountID: 1234123123123, amount: 100};
-<<<<<<< HEAD
     let command3 = {method: "withdraw", accountID: 1234123123123, amount: 9000};
 
     console.log('Someone says Hi');
     handler(command3);
-=======
     let command3 = {method: "withdraw", accountID: 1234123123123, amount: 40};
 
     console.log('Someone says Hi');
     handler(command2);
->>>>>>> 9226279dc00bd39f8771628405ed24f6ed9352d2
 
     // initialize the readModel.
     console.log(bank.getAccounts());
