@@ -158,9 +158,14 @@ class Bank {
                 for (let i = 0; i < evts.length; i++) {
                     let method = evts[i].payload.method,
                         evt = evts[i].payload;
+<<<<<<< HEAD
                         console.log(method)
                     switch (method) {
 
+=======
+
+                    switch (method) {
+>>>>>>> 9226279dc00bd39f8771628405ed24f6ed9352d2
                         case "createUser":
                             self.createAccount(evt);
                         case "deposit":
